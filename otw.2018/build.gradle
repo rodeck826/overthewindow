@@ -1,0 +1,99 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+apply from : 'dependencies.variable.gradle'
+
+buildDir = 'build'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+version = '2018-SNAPSHOT'
+project.webAppDirName = 'WebContent'
+
+repositories {
+	mavenCentral()
+}
+
+sourceSets{
+	main{
+		java{
+			srcDirs = ['src/main/com','src/main/mng','src/main/statics']
+		}
+		resources{
+			srcDirs = ['src/main/resources','src/main/com','src/main/statics']
+		}
+	}
+}
+
+
+eclipse{
+	classpath{
+		downloadSources = true
+		defaultOutputDir = file("WebContent/WEB-INF/classes")
+	}
+	project.natures "org.springsource.ide.eclipse.gradle.core.nature"
+	wtp{
+		component{
+			contextPath = "WebContent"
+		}
+		facet {
+			facet  name : 'jst.web', version : '3.0.1'
+			facet  name : 'jst.java', version :'1.8'
+		}
+	}
+}
+
+dependencies {
+	compile (spring.context){
+		exclude(module: 'commons-logging')
+	}
+	compile spring.webmvc
+	compile spring.orm
+	compile spring.oxm
+	compile spring.support
+	
+	compile servlet.taglib
+	compile servlet.jstl
+	compile servlet.transaction	
+	
+	compile common	
+	compile jackson	
+	compile mybatis	
+	compile aspectj
+	
+	compile log.slf4j
+	compile (log.logback){
+		exclude(module: 'slf4j-api')
+	}
+	
+	compile etc
+	
+	providedCompile servlet.api
+	providedCompile servlet.jsp
+	providedCompile "org.projectlombok:lombok:1.16.8"
+	
+	compile fileTree(dir: 'WebContent/WEB-INF/lib/',include:'*.jar')
+}
+
+[compileJava]*.options*.encoding = 'UTF-8'
+
+
+war{
+	exclude '**/WEB-INF/classes'
+	if(project.hasProperty('target')){
+		def tServer =project.getProperty('target')
+		if("$tServer" =="dev"){
+			webXml = file('WebContent/WEB-INF/web-dev.xml')
+		}else if("$tServer" =="server"){
+			webXml = file('WebContent/WEB-INF/web-server.xml')
+		}else{
+			webXml = file('WebContent/WEB-INF/web.xml')
+		}
+		exclude('**/web.xml')
+	}else{
+		webXml = file('WebContent/WEB-INF/web.xml')
+	}
+	
+}

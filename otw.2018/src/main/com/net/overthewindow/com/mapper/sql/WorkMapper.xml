@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.overthewindow.com.mapper.WorkMapper">
+	<select id="workList" parameterType="net.overthewindow.com.domain.Work" resultType="net.overthewindow.com.domain.Work">
+		SELECT
+			idx,
+			title,
+			contents,
+			tech,
+			note,
+			client,
+			sort
+		FROM
+			tb_works
+		ORDER BY sort
+	</select>
+	
+	<select id="workRead" parameterType="net.overthewindow.com.domain.Work" resultType="net.overthewindow.com.domain.Work">
+		SELECT
+			idx,
+			title,
+			contents,
+			tech,
+			note,
+			client,
+			sort
+		FROM
+			tb_works
+		WHERE
+			idx = #{idx}
+	</select>
+</mapper>

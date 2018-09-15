@@ -1,0 +1,92 @@
+def ver = [
+	spring : '4.3.4.RELEASE',
+	
+	servlet : '3.0.1',
+	servletJsp : '2.2',
+	servletJstl : '1.1.2',
+	servletTagLib : '1.1.2',
+	transaction:'1.1',
+	
+	slf4j : '1.7.7',
+	logback : '1.1.7',
+	
+	mybatis : '3.0.6',
+	mybatisSpring : '1.0.2',
+	
+	apacheFileUpload : '1.3.1',
+	apacheIo : '1.4',
+	apacheDigester : '2.1',
+	apacheBeanutils : '1.8.3',
+	apacheLang : '2.6',
+	apacheJexl : '2.0.1',
+	dhcp : '1.3',
+	pool : '1.5.7',
+	
+	jackson : '2.5.0',
+	sitemesh : '3.0.1',
+	xstream : '1.4.10',
+	aspectj : '1.7.4',
+	ehcache : '2.0.4',
+	javaxMail : '1.4.5',
+]
+ext.spring=[
+	context : "org.springframework:spring-context:${ver.spring}",
+	webmvc : "org.springframework:spring-webmvc:${ver.spring}",
+	orm : "org.springframework:spring-orm:${ver.spring}",
+	oxm : "org.springframework:spring-oxm:${ver.spring}",
+	support : "org.springframework:spring-context-support:${ver.spring}"
+]
+
+ext.servlet= [
+	api : "javax.servlet:javax.servlet-api:${ver.servlet}",
+	jsp :"javax.servlet.jsp:jsp-api:${ver.servletJsp}",
+	jstl : "javax.servlet:jstl:${ver.servletJstl}",
+	taglib : "taglibs:standard:${ver.servletTagLib}",
+	transaction : "javax.transaction:jta:${ver.transaction}"
+]
+
+ext.log=[
+	slf4j : "org.slf4j:jcl-over-slf4j:${ver.slf4j}",
+	logback : "ch.qos.logback:logback-classic:${ver.logback}"
+]
+
+
+ext.common = [
+	"commons-fileupload:commons-fileupload:${ver.apacheFileUpload}",
+	"commons-io:commons-io:${ver.apacheIo}",
+	"commons-digester:commons-digester:${ver.apacheDigester}",
+	"commons-beanutils:commons-beanutils:${ver.apacheBeanutils}",
+	"commons-lang:commons-lang:${ver.apacheLang}",
+	"org.apache.commons:commons-jexl:${ver.apacheJexl}",
+	"commons-dbcp:commons-dbcp:${ver.dhcp}",
+	"commons-pool:commons-pool:${ver.pool}"
+]
+
+ext.jackson=[
+	"com.fasterxml.jackson.core:jackson-core:${ver.jackson}",
+	"com.fasterxml.jackson.core:jackson-databind:${ver.jackson}",
+	"com.fasterxml.jackson.core:jackson-annotations:${ver.jackson}"
+]
+
+ext.mybatis=[
+	"org.mybatis:mybatis:${ver.mybatis}",
+	"org.mybatis:mybatis-spring:${ver.mybatisSpring}"
+]
+
+ext.aspectj=[
+	"org.aspectj:aspectjrt:${ver.aspectj}",
+	"org.aspectj:aspectjweaver:${ver.aspectj}"
+]
+
+ext.etc = [
+	"org.sitemesh:sitemesh:${ver.sitemesh}",
+	"com.thoughtworks.xstream:xstream:${ver.xstream}",
+	"org.jsoup:jsoup:1.6.2",
+	"joda-time:joda-time:1.6.2",
+	"org.antlr:stringtemplate:3.2",
+	"net.coobird:thumbnailator:0.4.7",
+	"net.sf.ehcache:ehcache-web:${ver.ehcache}",
+	"javax.mail:mail:${ver.javaxMail}",
+	"com.h2database:h2:1.4.191"
+	
+]

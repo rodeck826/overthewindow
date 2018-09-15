@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.overthewindow.com.mapper.WorkFileMapper">
+	<select id="workFileList" parameterType="net.overthewindow.com.domain.WorkFile" resultType="net.overthewindow.com.domain.WorkFile">
+		SELECT
+			file_idx as fileIdx,
+			work_idx as workIdx,
+			file_name as fileName,
+			file_path as filePath,
+			file_type as fileType
+		FROM
+			TB_file
+		WHERE
+			work_idx = #{workIdx}
+	</select>
+	
+	<select id="workFileRead" parameterType="net.overthewindow.com.domain.WorkFile" resultType="net.overthewindow.com.domain.WorkFile">
+		SELECT
+			SELECT
+			file_idx as fileIdx,
+			work_idx as workIdx,
+			file_name as fileName,
+			file_path as filePath,
+			file_type as fileType
+		FROM
+			TB_file
+		WHERE
+			file_idx = #{fileIdx}
+	</select>
+</mapper>

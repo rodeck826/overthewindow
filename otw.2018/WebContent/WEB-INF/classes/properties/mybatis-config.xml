@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false"/>			<!-- Mybatis 캐시 사용안함, EHcache 활용 -->
+		<setting name="lazyLoadingEnabled" value="false"/>		<!-- true 일경우 @XStreamAlias 어노테이션이 정상적으로 동작하지 않음 -->
+		<setting name="multipleResultSetsEnabled" value="true"/>
+		<setting name="useColumnLabel" value="true"/>
+		<setting name="useGeneratedKeys" value="false"/>
+		<setting name="autoMappingBehavior" value="PARTIAL"/>
+		<setting name="defaultExecutorType" value="BATCH"/>		<!-- SIMPLE, REUSE, BATCH -->
+		<setting name="defaultStatementTimeout" value="25000"/>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+</configuration>

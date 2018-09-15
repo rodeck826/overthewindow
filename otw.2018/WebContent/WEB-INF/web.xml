@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+	
+	<display-name>over.the.window</display-name>
+	<description>O.T.W Web Application</description>
+		
+	<context-param>
+		<param-name>propertyPath</param-name>
+		<param-value>properties/com-local.xml</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/spring/root-context.xml
+			/WEB-INF/spring/root-context-datasource.xml
+			/WEB-INF/spring/root-context-mybatis.xml
+		</param-value>
+	</context-param>
+	
+	
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	
+	<servlet>
+		<servlet-name>overthewindow</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/servlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>overthewindow</servlet-name>
+		<url-pattern>*.otw</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!--
+		UTF-8 ENCODING FILTER
+	-->
+	
+	<filter>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>*.otw</url-pattern>
+	</filter-mapping>
+	
+	<!--
+		CROSS-SITE SCRIPT FILTER
+	-->
+	
+	<filter>
+		<filter-name>xssFilter</filter-name>
+		<filter-class>net.overthewindow.com.filter.XSSFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>xssFilter</filter-name>
+		<url-pattern>*.otw</url-pattern>
+	</filter-mapping>
+	
+	
+	<!--
+		SITEMESH TEMPLATE FILTER
+	-->
+	<filter>
+		<filter-name>sitemesh</filter-name>
+		<filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>sitemesh</filter-name>
+		<url-pattern>*.otw</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+	
+	<!--
+		FILE UPLOAD MULTIPART FILTER
+	-->
+	
+	<filter>
+		<filter-name>multipartFilter</filter-name>
+		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>multipartFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- Gzip Filter -->
+	
+	<filter>
+		<filter-name>gzipFilter</filter-name>
+		<filter-class>net.sf.ehcache.constructs.web.filter.GzipFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>gzipFilter</filter-name>
+		<url-pattern>*.js</url-pattern>
+	</filter-mapping>
+	<!--
+		JSP CONFIG : c:forEach 사용시 공백제거
+	-->
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<page-encoding>UTF-8</page-encoding>
+			<trim-directive-whitespaces>true</trim-directive-whitespaces>
+		</jsp-property-group>
+	</jsp-config>
+	
+	
+		<!--
+		WELCOME-FILE-LIST
+	-->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	
+	
+	<!--
+		MIME MAPPING
+	-->
+	
+	<mime-mapping>
+		<extension>JPG</extension>
+		<mime-type>image/jpeg</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+		<extension>js</extension>
+		<mime-type>application/javascript</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>css</extension>
+		<mime-type>text/css</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+		<extension>jpg</extension>
+		<mime-type>image/jpeg</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+		<extension>GIF</extension>
+		<mime-type>image/gif</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+		<extension>gif</extension>
+		<mime-type>image/gif</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+		<extension>PNG</extension>
+		<mime-type>image/png</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+		<extension>png</extension>
+		<mime-type>image/png</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+		<extension>mov</extension>
+		<mime-type>video/quicktime</mime-type>
+	</mime-mapping>
+	
+</web-app>

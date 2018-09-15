@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:util="http://www.springframework.org/schema/util"	
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-4.3.xsd
+			http://www.springframework.org/schema/util
+			http://www.springframework.org/schema/util/spring-util-4.3.xsd
+			http://www.springframework.org/schema/cache
+			http://www.springframework.org/schema/cache/spring-cache.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+	</bean>
+
+	<!-- ========================= GENERAL DEFINITIONS ========================= --> 
+
+	<bean id="com" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:properties/com.xml</value>
+			</list>
+		</property>
+	</bean>
+</beans>

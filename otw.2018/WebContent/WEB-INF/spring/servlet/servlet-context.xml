@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+			http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+			http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd
+			http://www.springframework.org/schema/aop
+			http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!--
+		INIT DEFAULT
+	-->
+	
+	
+	
+	<mvc:default-servlet-handler default-servlet-name="default" />
+	
+	<!-- Scan for Spring beans declared via annotations -->
+	<context:component-scan base-package="net.overthewindow" name-generator="net.overthewindow.com.support.FullBeanNameGenerator"></context:component-scan>
+	
+	<mvc:annotation-driven />
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*.otw"/>
+			<mvc:mapping path="/**/*.otw"/>
+			<mvc:exclude-mapping path="/ajax/**"/>
+			<bean class="net.overthewindow.com.interceptor.ApplicationIntercepter" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	
+	
+	
+	<aop:aspectj-autoproxy />
+	
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*Read" read-only="true" />
+			<tx:method name="*Add" propagation="REQUIRED" />
+			<tx:method name="*Mod" propagation="REQUIRED" />
+			<tx:method name="*Del" propagation="REQUIRED" />
+			<tx:method name="*List" read-only="true" />
+			<tx:method name="*Count" read-only="true" />
+			<tx:method name="*Json" propagation="REQUIRED" />
+			<tx:method name="*Search" read-only="true" />
+			<tx:method name="*Cancel" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:advisor pointcut="execution(* net.overthewindow..service.*Service.*(..))" advice-ref="transactionAdvice" />
+	</aop:config>
+
+
+	<bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean" id="contentNegotiationManager">
+		<property name="favorPathExtension" value="false" />
+		<property name="ignoreAcceptHeader" value="false" />
+		<property name="defaultContentType" value="text/html" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="down" value="application/down" />
+				<entry key="pdf" value="application/pdf" />
+				<entry key="xls" value="application/xls" />
+				<entry key="json" value="application/json" />
+				<entry key="xml" value="application/xml" />
+			</map>
+		</property>
+	</bean>
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+	
+		<property name="order" value="1" />
+		<property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+					<property name="modelKey" value="result"/>
+					<property name="marshaller">
+						<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+							<property name="autodetectAnnotations" value="true"/>
+							<property name="streamDriver">
+								<bean class="com.thoughtworks.xstream.io.xml.XppDriver">
+									<constructor-arg>
+										<bean class="com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder">
+											<constructor-arg index="0" value="_-"/>
+											<constructor-arg index="1" value="_"/>
+										</bean>
+									</constructor-arg>
+								</bean>
+							</property>
+						</bean>
+					</property>
+				</bean>
+			</list>
+		</property>
+		
+		<property name="viewResolvers"> 
+			<list>
+				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+					<property name="order" value="2" />
+				</bean>
+				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="prefix" value="/WEB-INF/views/" />
+					<property name="suffix" value=".jsp" />
+					<property name="order" value="3" />
+				</bean>
+			</list> 
+		</property>
+		
+	</bean>
+	
+	<!--
+		INIT CUSTOM UTILS
+	-->
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<property name="username" value="hgmnet1988@gmail.com"/>
+		<property name="password" value="dpdlclwldpa1"/>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+</beans>
